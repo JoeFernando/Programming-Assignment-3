@@ -40,12 +40,14 @@ rankhospital <- function (state, outcome, num = "best")
     #Filter out missing values and pick only the hospitals in the state you are interested in
     specific_outcome <- filter(specific_outcome, specific_outcome[+c(3)] != "Not Available", specific_outcome[+c(2)] == state)
     
+    ranking             <- as.numeric(specific_outcome[,3])
+    specific_outcome    <- cbind(specific_outcome, ranking)
     
     
     #specific_outcome <- as.matrix(all_outcome[c(7,disease_col)])  
     #Sort the dataframe by outcome
     
-    specific_outcome <- arrange(specific_outcome, specific_outcome[,3] , specific_outcome[,1])
+    specific_outcome <- arrange(specific_outcome, specific_outcome[,4] , specific_outcome[,1])
     
         
     records <- NROW(specific_outcome)
