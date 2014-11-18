@@ -20,7 +20,18 @@ best <- function (state, outcome)
          else
            
        {
-    
+         
+         
+         
+         
+   #      state   <- "NY"
+  #       outcome <- "pneumonia"
+         
+         
+         
+         
+         
+         
   #if input is valid then execute the rest of the function
 
   #column number of disease to select
@@ -33,17 +44,24 @@ best <- function (state, outcome)
 #  disease_col <- if(outcome == "heart attack")  {11}
 #                    else if(outcome == "heart failure") {17}
 #                            else {23}
-  
-  
+
+
+
  #extract the hospital name, state and disease columns only 
- specific_outcome <- all_outcome[c(2,7,disease_col)]
- 
+ specific_outcome    <- all_outcome[c(2,7,disease_col)]
+
+
+
  #Filter out missing values and pick only the hospitals in the state you are interested in 
  specific_outcome <- filter(specific_outcome, specific_outcome[+c(3)] != "Not Available", specific_outcome[+c(2)] == state)
-  
+
+
+ranking             <- as.numeric(specific_outcome[,3])
+specific_outcome    <- cbind(specific_outcome, ranking)
+
 
  #Sort the dataframe by outcome
- specific_outcome  <- arrange(specific_outcome, specific_outcome[,3] , specific_outcome[,1])
+ specific_outcome  <- arrange(specific_outcome, specific_outcome[,4] , specific_outcome[,1])
  
  
       }
@@ -56,7 +74,7 @@ best <- function (state, outcome)
 
 
 #best("TX", "heart attack")
-#best("TX", "heart failure")
+best("TX", "heart failure")
 #best("MD", "heart attack")
 #best("MD", "pneumonia")
 #best("BB", "heart attack")
