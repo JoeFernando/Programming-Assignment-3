@@ -50,13 +50,13 @@ rankhospital <- function (state, outcome, num = "best")
     specific_outcome <- arrange(specific_outcome, specific_outcome[,4] , specific_outcome[,1])
     
         
-    records <- NROW(specific_outcome)
+    counter <- NROW(specific_outcome)
     
     
     
     if(num == "best") {return(specific_outcome[1,1])}
-       else if(num == "worst") {return(specific_outcome[records,1])}
-         else if(num > records) {return("NA")}
+       else if(num == "worst") {return(specific_outcome[counter,1])}
+         else if(num > counter) {return("NA")}
            else {return(specific_outcome[num,1])}
     
     
