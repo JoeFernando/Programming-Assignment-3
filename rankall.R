@@ -36,8 +36,8 @@ rankall <- function (outcome, num = "best")
     
     
     #figure out the ranking number to read for each state    
-    if(num == "best") { num == 1}    
-    else if(num == "worst") {num == counter}    
+    if(num == "best") { num = as.integer(1)}    
+    else if(num == "worst") {num = as.integer(counter)}    
     else if(num > counter) {stop("invalid outcome")}    
     else {num == num}
     
@@ -64,9 +64,23 @@ rankall <- function (outcome, num = "best")
           #Sort the dataframe by outcome
       
          state_outcome <- arrange(state_outcome, state_outcome[,4] , state_outcome[,1])      
-         hospital      <- if(!is.null(state_outcome[num,1])) {state_outcome[num,1]} else {"<NA>"} 
-         output1        <- rbind(output1, as.data.frame(hospital))
-         output2        <- rbind(output2, as.data.frame(state))
+         if(num < counter)
+         {
+           hospital      <- if(!is.null(state_outcome[num,1])) {state_outcome[num,1]} else {"<NA>"} 
+           output1        <- rbind(output1, as.data.frame(hospital))
+           output2        <- rbind(output2, as.data.frame(state))
+         }
+         
+         else
+         {
+           last_row     <- NROW(state_outcome)
+           hospital      <- if(!is.null(state_outcome[last_row,1])) {state_outcome[last_row,1]} else {"<NA>"} 
+           
+           
+           output1        <- rbind(output1, as.data.frame(hospital))
+           output2        <- rbind(output2, as.data.frame(state))
+          }
+         
         }
     
       }
