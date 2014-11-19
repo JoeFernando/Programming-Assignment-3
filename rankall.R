@@ -12,8 +12,13 @@ rankall <- function (outcome, num = "best")
   counter     <- NROW(state_db)  
   
   #output      <- data.frame(hospital = character(0), state = character(0))
-  output      <- data.frame()
+  output       <- data.frame()
+  output1      <- data.frame()
+  output2      <- data.frame()  
   
+  #Sort state_db
+  state_db     <- sort(state_db)
+    
   
   #check if input disease is valid  
   check_disease <- ifelse(outcome %in% disease,3,0)
@@ -53,21 +58,23 @@ rankall <- function (outcome, num = "best")
     #extract the hospital names for the spcified rank and rbind then to the output data frame    
     for(i in 1:counter)      
         {     
-          state_to_check <- state_db[i]
-          state_outcome  <- filter(specific_outcome, specific_outcome[+c(2)] == state_to_check)
+          state          <- state_db[i]
+          state_outcome  <- filter(specific_outcome, specific_outcome[+c(2)] == state)
       
           #Sort the dataframe by outcome
       
          state_outcome <- arrange(state_outcome, state_outcome[,4] , state_outcome[,1])      
-         extract       <- ifelse(state_outcome[num,1] != NULL, state_outcome[num,1], "<NA>")      
-         output        <- rbind(output, extract, state_to_check)
-      
+         hospital      <- if(!is.null(state_outcome[num,1])) {state_outcome[num,1]} else {"<NA>"} 
+         output1        <- rbind(output1, as.data.frame(hospital))
+         output2        <- rbind(output2, as.data.frame(state))
         }
     
       }
   
   
   
-  output
+  output <- cbind(output1, output2)
   
 }
+
+head(rankall("heart attack", 20), 10)
