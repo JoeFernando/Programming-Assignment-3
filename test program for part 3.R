@@ -4,6 +4,7 @@
     
 outcome <- "heart attack"
 num     <- 20
+
     
     library(dplyr)
     
@@ -12,9 +13,9 @@ num     <- 20
     disease     <- c("heart attack", "heart failure", "pneumonia")  
     counter     <- NROW(state_db)  
     
-    #output      <- data.frame(hospital = character(0), state = character(0))
-    output      <- data.frame()
-    
+    output      <- data.frame(hospital = character(0), state = character(0))
+    output1      <- data.frame()
+    output2      <- data.frame()
     
     #check if input disease is valid  
     check_disease <- ifelse(outcome %in% disease,3,0)
@@ -62,14 +63,16 @@ num     <- 20
         extract       <- if(!is.null(state_outcome[num,1])) {state_outcome[num,1]} else {"<NA>"} 
                                 
                                 
-        output        <- rbind(output, extract, state_to_check)
+        output1        <- rbind(output1, extract)
+        output2        <- rbind(output2, state_to_check)
+        
         
       }
       
     }
     
     
-    
+    output         <- cbind(output, output1, output2)
     head(output)
     
   #}
