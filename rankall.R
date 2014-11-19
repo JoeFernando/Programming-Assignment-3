@@ -1,7 +1,7 @@
 
 rankall <- function (outcome, num = "best")
 
-  
+ 
 {
 
   library(dplyr)
@@ -11,8 +11,8 @@ rankall <- function (outcome, num = "best")
   disease     <- c("heart attack", "heart failure", "pneumonia")  
   counter     <- NROW(state_db)  
   
-  output      <- data.frame(hospital = character(0), state = character(0))
-  
+  #output      <- data.frame(hospital = character(0), state = character(0))
+  output      <- data.frame()
   
   
   #check if input disease is valid  
@@ -33,7 +33,7 @@ rankall <- function (outcome, num = "best")
     #figure out the ranking number to read for each state    
     if(num == "best") { num == 1}    
     else if(num == "worst") {num == counter}    
-    else if(num > counter | num < 1) {stop("invalid outcome")}    
+    else if(num > counter) {stop("invalid outcome")}    
     else {num == num}
     
     
@@ -54,7 +54,7 @@ rankall <- function (outcome, num = "best")
     for(i in 1:counter)      
         {     
           state_to_check <- state_db[i]
-          state_outcome  <- filter(specific_outcome, specific_outcome[+c(2)] == i)
+          state_outcome  <- filter(specific_outcome, specific_outcome[+c(2)] == state_to_check)
       
           #Sort the dataframe by outcome
       
